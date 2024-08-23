@@ -6,13 +6,11 @@ https://colab.research.google.com/drive/1zWQB1amX0v8f9AJj9wiTdcWPx8GUKQj9?usp=sh
 Join our community about **Computer Vision**: https://t.me/computer_vision_uk and https://discord.gg/yVAjkBgmt4
 """
 
+import os
 import time
 import logging
-from os import remove
-from os.path import exists
 
 import torch
-import numpy as np
 import supervision as sv
 import rerun as rr
 
@@ -111,6 +109,7 @@ model_names = {
 check_confidence = True
 min_confidence = 0.8
 
+recording_file = "recording.rrd"
 filename = "video_demo.mp4"
 result_file_path = "result_video.mp4"
 
@@ -129,7 +128,7 @@ def setup_logging():
     logger.addHandler(rerun_handler)
 
 
-def annotate_image(input_image, detections, labels) -> np.ndarray:
+def annotate_image(input_image, detections, labels):
     output_image = MASK_ANNOTATOR.annotate(input_image, detections)
     output_image = BOUNDING_BOX_ANNOTATOR.annotate(output_image, detections)
     output_image = LABEL_ANNOTATOR.annotate(output_image, detections, labels=labels)
@@ -235,9 +234,10 @@ print(all_detections[:1])
 
 print("Time elapsed:", time.time() - t0)
 
-if exists("recording.rrd"):
-    remove("recording.rrd")
-    print("Removed recording.rrd")
+if os.path.exists(recording_file):
+    os.remove(recording_file)
+    print(f"Removed {recording_file}")
 
-rr.save("recording.rrd")
-print("Saved recording.rrd")
+rr.save(recording_file)
+
+print(f"Saved {recording_file}")
