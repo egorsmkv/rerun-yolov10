@@ -1,0 +1,9 @@
+.venv/
+.ruff_cache/
+
+video_demo.mp4
+result_video.mp4
+
+*.rrd
+
+frame.jpg

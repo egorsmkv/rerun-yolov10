@@ -1,0 +1,7 @@
+rerun-sdk
+supervision
+
+safetensors
+huggingface_hub
+
+git+https://github.com/THU-MIG/yolov10
